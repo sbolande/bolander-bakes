@@ -7,7 +7,7 @@ export default function NavLink({ href, style, children }) {
   console.log(isActive);
 
   return (
-    <NextLink href={href}>
+    <NextLink href={href} passHref>
       <Link
         _hover={{ textDecor: "none", borderBottomColor: "teal.500" }}
         _focus={{ boxShadow: "none" }}
