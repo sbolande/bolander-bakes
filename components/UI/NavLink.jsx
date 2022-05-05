@@ -4,7 +4,6 @@ import { useRouter } from "next/router";
 
 export default function NavLink({ href, style, children }) {
   const isActive = useRouter().pathname === href;
-  console.log(isActive);
 
   return (
     <NextLink href={href} passHref>

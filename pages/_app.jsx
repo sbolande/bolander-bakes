@@ -12,7 +12,7 @@ const theme = extendTheme({
       html: {
         overflowY: "overlay",
       },
-      "body, .table-container, .tab-list": {
+      "body, textarea": {
         "::-webkit-scrollbar": {
           width: "6px",
           height: "6px",
