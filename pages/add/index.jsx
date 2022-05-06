@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { chakra, Button, useToast, VStack } from "@chakra-ui/react";
 import {
   FormInput,
@@ -15,10 +15,11 @@ export default function Add() {
     setIsLoading(true);
 
     try {
-      const name = event.target["name"].value;
-      const category = event.target["category"].value;
-      const ingredients = event.target["ingredients"].value;
-      const instructions = event.target["instructions"].value;
+      const name = event.target["name"]?.value;
+      const category = event.target["category"]?.value;
+      const time = event.target["time"]?.value;
+      const ingredients = event.target["ingredients"]?.value;
+      const instructions = event.target["instructions"]?.value;
 
       // TODO: submit to backend
 
@@ -67,6 +68,12 @@ export default function Add() {
           <option value="dinner">Dinner</option>
           <option value="other">Other</option>
         </FormSelect>
+        <FormInput
+          label="Time"
+          name="time"
+          type="text"
+          placeholder="30 minutes"
+        />
         <FormTextarea
           label="Ingredients"
           name="ingredients"
