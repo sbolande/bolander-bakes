@@ -83,6 +83,7 @@ export function FormSelect({
         {label}
       </FormLabel>
       <Select
+        name={name}
         placeholder={firstRender ? placeholder : null}
         onChange={handleChange}
         autoFocus={autoFocus}

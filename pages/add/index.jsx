@@ -14,13 +14,14 @@ export default function Add() {
     event.preventDefault();
     setIsLoading(true);
 
-    const name = event.target["name"].value;
-    const category = event.target["category"].value;
-    const ingredients = event.target["ingredients"].value;
-    const instructions = event.target["instructions"].value;
-
     try {
+      const name = event.target["name"].value;
+      const category = event.target["category"].value;
+      const ingredients = event.target["ingredients"].value;
+      const instructions = event.target["instructions"].value;
+
       // TODO: submit to backend
+
       toast({
         title: `${name} added to ${category}`,
         status: "success",
