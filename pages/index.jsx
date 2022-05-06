@@ -7,7 +7,7 @@ import {
   HStack,
   Icon,
 } from "@chakra-ui/react";
-// import {TiPlusOutline} from "react-icons/ti";
+import { TiPlus } from "react-icons/ti";
 import NextLink from "next/link";
 
 export default function Home() {
@@ -26,8 +26,8 @@ export default function Home() {
           color="teal.200"
           _hover={{ color: "teal.300" }}
         >
-          <HStack>
-            {/* <Icon as={TiPlusOutline} /> */}
+          <HStack spacing="0.1rem">
+            <Icon as={TiPlus} />
             <Text>Add New Recipe</Text>
           </HStack>
         </Link>
