@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   FormControl,
   FormLabel,
@@ -6,10 +7,8 @@ import {
   Input,
   Textarea,
   Select,
-  HStack,
-  Text,
+  Checkbox,
 } from "@chakra-ui/react";
-import { useState } from "react";
 
 export function FormInput({
   name,
@@ -93,5 +92,19 @@ export function FormSelect({
         {children}
       </Select>
     </FormControl>
+  );
+}
+
+export function FormCheckbox({ name, label, icon, isChecked = false }) {
+  const [showIcon, setShowIcon] = useState(isChecked);
+  return (
+    <Checkbox
+      name={name}
+      colorScheme="teal"
+      icon={showIcon ? icon : <path />}
+      onChange={(e) => setShowIcon(e.target.checked)}
+    >
+      {label}
+    </Checkbox>
   );
 }

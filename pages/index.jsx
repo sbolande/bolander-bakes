@@ -7,8 +7,10 @@ import {
   HStack,
   Icon,
 } from "@chakra-ui/react";
-import { TiPlus } from "react-icons/ti";
 import NextLink from "next/link";
+import RecipeLoader from "../components/Recipe/RecipeLoader";
+
+import { TiPlus } from "react-icons/ti";
 
 export default function Home() {
   return (
@@ -28,13 +30,15 @@ export default function Home() {
         >
           <HStack spacing="0.1rem">
             <Icon as={TiPlus} />
-            <Text>Add New Recipe</Text>
+            <Text as="button">Add New Recipe</Text>
           </HStack>
         </Link>
       </NextLink>
       <Box>
-        <Heading as="h2">Favorites</Heading>
-        {/* TODO */}
+        <Heading as="h2" align="center">
+          Favorites
+        </Heading>
+        <RecipeLoader favorites={true} />
       </Box>
     </VStack>
   );

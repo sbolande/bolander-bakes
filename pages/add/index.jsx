@@ -1,16 +1,19 @@
 import { useState } from "react";
 import { chakra, Button, useToast, VStack } from "@chakra-ui/react";
 import {
+  FormCheckbox,
   FormInput,
   FormSelect,
   FormTextarea,
 } from "../../components/Form/Input";
 
+import { FaStar } from "react-icons/fa";
+
 export default function Add() {
   const [isLoading, setIsLoading] = useState(false);
   const toast = useToast();
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
 
@@ -20,18 +23,37 @@ export default function Add() {
       const time = event.target["time"]?.value;
       const ingredients = event.target["ingredients"]?.value;
       const instructions = event.target["instructions"]?.value;
+      const favorite = event.target["favorite"]?.checked;
 
-      // TODO: submit to backend
+      const res = await fetch("/api/create", {
+        method: "POST",
+        body: JSON.stringify({
+          name,
+          category,
+          time,
+          ingredients,
+          instructions,
+          favorite,
+        }),
+        headers: {
+          "Content-type": "application/json",
+        },
+      });
+      const data = await res.json();
+
+      if (res.status !== 200)
+        throw new Error(`${res.status} Error: ${data.message}`);
 
       toast({
-        title: `${name} added to ${category}`,
+        title: data.message,
         status: "success",
         isClosable: true,
       });
     } catch (err) {
+      console.log(err);
       toast({
-        title: "Oops",
-        description: "There was a problem adding that recipe.",
+        title: "There was a problem adding that recipe!",
+        description: err.message,
         status: "error",
         isClosable: true,
       });
@@ -63,10 +85,10 @@ export default function Add() {
           placeholder="-- Choose one --"
           required
         >
-          <option value="breakfast">Breakfast</option>
-          <option value="lunch">Lunch</option>
-          <option value="dinner">Dinner</option>
-          <option value="other">Other</option>
+          <option value="Breakfast">Breakfast</option>
+          <option value="Lunch">Lunch</option>
+          <option value="Dinner">Dinner</option>
+          <option value="Other">Other</option>
         </FormSelect>
         <FormInput
           label="Time"
@@ -84,6 +106,7 @@ export default function Add() {
           name="instructions"
           placeholder="..."
         />
+        <FormCheckbox label="Favorite?" name="favorite" icon={<FaStar />} />
         <Button
           type="submit"
           colorScheme="teal"
