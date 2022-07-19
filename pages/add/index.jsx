@@ -20,6 +20,7 @@ export default function Add() {
     try {
       const name = event.target["name"]?.value;
       const category = event.target["category"]?.value;
+      const imageUrl = event.target["imageUrl"]?.value;
       const time = event.target["time"]?.value;
       const ingredients = event.target["ingredients"]?.value;
       const instructions = event.target["instructions"]?.value;
@@ -30,6 +31,7 @@ export default function Add() {
         body: JSON.stringify({
           name,
           category,
+          imageUrl,
           time,
           ingredients,
           instructions,
@@ -41,8 +43,7 @@ export default function Add() {
       });
       const data = await res.json();
 
-      if (res.status !== 200)
-        throw new Error(`${res.status} Error: ${data.message}`);
+      if (!res.ok) throw new Error(`${res.status}: ${data.message}`);
 
       toast({
         title: data.message,
@@ -70,7 +71,7 @@ export default function Add() {
       maxW="800px"
       onSubmit={handleSubmit}
     >
-      <VStack align="center" spacing="1rem">
+      <VStack align="center" spacing="1rem" marginBottom="2rem">
         <FormInput
           label="Recipe Name"
           name="name"
@@ -90,6 +91,12 @@ export default function Add() {
           <option value="Dinner">Dinner</option>
           <option value="Other">Other</option>
         </FormSelect>
+        <FormInput
+          label="Image URL"
+          name="imageUrl"
+          type="url"
+          placeholder="https://www.food.com/hamburger.jpg"
+        />
         <FormInput
           label="Time"
           name="time"

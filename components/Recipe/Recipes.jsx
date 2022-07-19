@@ -1,4 +1,4 @@
-import { SimpleGrid } from "@chakra-ui/react";
+import { SimpleGrid, Text } from "@chakra-ui/react";
 import Card from "./Card";
 
 export default function Recipes({ recipes }) {
@@ -9,9 +9,9 @@ export default function Recipes({ recipes }) {
       w="100%"
       padding="1rem"
     >
-      {recipes.map((r, i) => (
-        <Card recipe={r} key={`Recipe_${i}`} />
-      ))}
+      {recipes.length === 0 && <Text>No recipes found.</Text>}
+      {recipes.length > 0 &&
+        recipes.map((r, i) => <Card recipe={r} key={`Recipe_${i}`} />)}
     </SimpleGrid>
   );
 }

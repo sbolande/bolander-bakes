@@ -18,12 +18,18 @@ import {
   TagRightIcon,
   HStack,
   Icon,
+  IconButton,
+  Image,
+  Center,
+  useBoolean,
+  Stack,
 } from "@chakra-ui/react";
 
-import { MdStar } from "react-icons/md";
+import { MdStar, MdCloseFullscreen, MdOpenInFull } from "react-icons/md";
 
 export default function Card({
   recipe: {
+    id,
     name,
     imageUrl,
     category,
@@ -34,6 +40,8 @@ export default function Card({
   },
 }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [fullscreen, setFullscreen] = useBoolean(false);
+  const hasImage = imageUrl !== null && imageUrl !== "";
 
   const getCategoryScheme = () => {
     switch (category.toLowerCase()) {
@@ -50,12 +58,14 @@ export default function Card({
 
   return (
     <>
-      <Box
+      <VStack
+        id={`recipe_${id}`}
+        w={{ base: "75vw", sm: "40vw", md: "25vw", lg: "20vw" }}
+        justify="space-between"
         border="1px"
         borderColor="gray.500"
         borderRadius="lg"
         padding="0.5rem"
-        w={{ base: "75vw", sm: "40vw", md: "25vw", lg: "20vw" }}
       >
         <Heading as="h3" fontSize="lg" textAlign="center">
           <Button
@@ -71,12 +81,26 @@ export default function Card({
             {name}
           </Button>
         </Heading>
-        {/* IMAGE */}
-        <Text fontSize="sm">{time}</Text>
-      </Box>
+        {hasImage && (
+          <Center>
+            <Button variant="unstyled" onClick={onOpen} h="fit-content">
+              <Image
+                src={imageUrl}
+                alt={name}
+                fallback="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLFhJEVjGAVBH-XiKoDa6Ft9NMyqgrY7m86Q&usqp=CAU"
+                borderRadius="md"
+              />
+            </Button>
+          </Center>
+        )}
+        <Text fontSize="sm" alignSelf="start">
+          {time}
+        </Text>
+      </VStack>
       <Modal
         isOpen={isOpen}
         onClose={onClose}
+        size={fullscreen ? "full" : "md"}
         scrollBehavior="inside"
         isCentered
       >
@@ -91,43 +115,67 @@ export default function Card({
             </HStack>
           </ModalHeader>
           <ModalCloseButton />
-          <ModalBody>
-            <VStack align="left" w="100%" spacing="0.8rem">
-              {/* IMAGE */}
-              <Text>
-                <chakra.strong color="teal.300">Approx Time:</chakra.strong>{" "}
-                {time}
-              </Text>
-              <Box>
-                <Text color="teal.300" as="strong">
-                  Ingredients:
+          <ModalBody className="recipeModal">
+            <Stack
+              direction={{
+                base: "column",
+                md: fullscreen ? "row-reverse" : "column",
+              }}
+            >
+              {hasImage && (
+                <Image
+                  src={imageUrl}
+                  alt={name}
+                  fallbackSrc="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLFhJEVjGAVBH-XiKoDa6Ft9NMyqgrY7m86Q&usqp=CAU"
+                  fallbackStrategy="onError"
+                  boxSize="300px"
+                  alignSelf="center"
+                  borderRadius="md"
+                  fit="cover"
+                />
+              )}
+              <VStack align="left" w="100%" spacing="0.8rem">
+                <Text>
+                  <chakra.strong color="teal.300">Approx Time:</chakra.strong>{" "}
+                  {time}
                 </Text>
-                <Text whiteSpace="pre-wrap">{ingredients}</Text>
-              </Box>
-              <Box>
-                <Text color="teal.300" as="strong">
-                  Instructions:
-                </Text>
-                <Text whiteSpace="pre-wrap">{instructions}</Text>
-              </Box>
-              <HStack align="start" spacing="0.5rem">
-                <Tag
-                  size="lg"
-                  variant="subtle"
-                  colorScheme={getCategoryScheme()}
-                >
-                  <TagLabel>{category}</TagLabel>
-                </Tag>
-                {favorite && (
-                  <Tag size="lg" variant="subtle" colorScheme="teal">
-                    <TagLabel>Favorite</TagLabel>
-                    <TagRightIcon as={MdStar} />
+                <Box>
+                  <Text color="teal.300" as="strong">
+                    Ingredients:
+                  </Text>
+                  <Text whiteSpace="pre-wrap">{ingredients}</Text>
+                </Box>
+                <Box>
+                  <Text color="teal.300" as="strong">
+                    Instructions:
+                  </Text>
+                  <Text whiteSpace="pre-wrap">{instructions}</Text>
+                </Box>
+                <HStack align="start" spacing="0.5rem">
+                  <Tag
+                    size="lg"
+                    variant="subtle"
+                    colorScheme={getCategoryScheme()}
+                  >
+                    <TagLabel>{category}</TagLabel>
                   </Tag>
-                )}
-              </HStack>
-            </VStack>
+                  {favorite && (
+                    <Tag size="lg" variant="subtle" colorScheme="teal">
+                      <TagLabel>Favorite</TagLabel>
+                      <TagRightIcon as={MdStar} />
+                    </Tag>
+                  )}
+                </HStack>
+              </VStack>
+            </Stack>
           </ModalBody>
           <ModalFooter>
+            <IconButton
+              colorScheme="teal"
+              mr="3"
+              icon={fullscreen ? <MdCloseFullscreen /> : <MdOpenInFull />}
+              onClick={setFullscreen.toggle}
+            />
             <Button colorScheme="teal" mr="3" onClick={onClose}>
               Close
             </Button>

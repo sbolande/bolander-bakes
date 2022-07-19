@@ -1,62 +1,40 @@
+import { MongoClient } from "mongodb";
+
 export default async function handler(req, res) {
-  try {
-    const category = req.query.category;
-    const favorites = req.query.favorites;
+  // connect to mongo
+  MongoClient.connect(process.env.MONGO_URL)
+    .then((client) => {
+      console.log("Successfully connected to Mongo.");
 
-    // TODO: fetch data to Mongo
-    let recipes = [
-      {
-        id: 1,
-        name: "Poop on a Stick",
-        category: "Breakfast",
-        time: "10 minutes",
-        ingredients: "- Poop\n- Stick",
-        instructions: "Put poop on stick, enjoy.",
-        favorite: true,
-      },
-      {
-        id: 2,
-        name: "Poop on a Stick",
-        category: "Dinner",
-        time: "10 minutes",
-        ingredients: "- Poop\n- Stick",
-        instructions: "Put poop on stick, enjoy.",
-        favorite: false,
-      },
-      {
-        id: 3,
-        name: "Poop on a Stick",
-        category: "Lunch",
-        time: "10 minutes",
-        ingredients: "- Poop\n- Stick",
-        instructions: "Put poop on stick, enjoy.",
-        favorite: false,
-      },
-      {
-        id: 4,
-        name: "Poop on a Stick",
-        category: "Breakfast",
-        time: "10 minutes",
-        ingredients: "- Poop\n- Stick",
-        instructions: "Put poop on stick, enjoy.",
-        favorite: false,
-      },
-    ];
+      // fetch query params
+      const category = req.query.category;
+      const favorites = req.query.favorites;
+      let query = {};
+      if (category) query.category = category;
+      if (favorites) query.favorite = true;
 
-    if (category) {
-      recipes = recipes.filter(
-        (r) => r.category.toLowerCase() === category.toLowerCase()
-      );
-    }
-    if (favorites) {
-      recipes = recipes.filter((r) => r.favorite);
-    }
+      // query collection
+      const db = client.db(process.env.MONGO_DB);
+      db.collection("recipes")
+        .find(query)
+        .toArray()
+        .then((recipes) => {
+          if (recipes === null || recipes.length === 0) {
+            console.error("No documents found in db.");
+          }
 
-    res.status(200).json(recipes);
-    return;
-  } catch (err) {
-    console.log(err);
-    res.status(500).send({ message: "Internal server error." });
-    return;
-  }
+          res.status(200).json(recipes);
+        })
+        .finally(() => {
+          // close client regardless
+          client.close();
+        });
+
+      return;
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send({ message: "Internal server error." });
+      return;
+    });
 }

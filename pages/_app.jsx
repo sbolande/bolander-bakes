@@ -12,7 +12,7 @@ const theme = extendTheme({
       html: {
         overflowY: "overlay",
       },
-      "body, textarea": {
+      "body, textarea, .recipeModal": {
         "::-webkit-scrollbar": {
           width: "6px",
           height: "6px",
