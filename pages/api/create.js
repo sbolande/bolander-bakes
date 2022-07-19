@@ -1,3 +1,6 @@
+import { MongoClient } from "mongodb";
+import requestIp from "request-ip";
+
 function isSet(val) {
   if (val === null || val === undefined || val === "") {
     return false;
@@ -5,10 +8,27 @@ function isSet(val) {
   return true;
 }
 
-export default function handler(req, res) {
+async function sendToMongo(recipe) {
+  // conect to mongo
+  MongoClient.connect(process.env.MONGO_URL).then((client) => {
+    console.log("Successfully connected to Mongo.");
+
+    // insert into collection
+    const db = client.db(process.env.MONGO_DB);
+    db.collection("recipes").insertOne(recipe);
+  });
+}
+
+export default async function handler(req, res) {
   if (req.method !== "POST") {
     res.status(405).send({ message: "Only POST requests allowed." });
     return;
+  }
+
+  const ip = requestIp.getClientIp(req);
+  console.log(ip);
+  if (ip !== process.env.TEST_IP && ip !== process.env.SETH_IP) {
+    res.status(401).send({ message: "Unauthorized, only Bolanders allowed!" });
   }
 
   try {
@@ -28,15 +48,15 @@ export default function handler(req, res) {
       return;
     }
 
-    // TODO: send data to Mongo
-    res.status(200).send({
+    await sendToMongo(req.body);
+    res.status(201).send({
       message: `${name} added to ${category}${
         favorite ? " and Favorites" : ""
       }`,
     });
     return;
   } catch (err) {
-    console.log(err);
+    console.error(err);
     res.status(500).send({ message: "Internal server error." });
     return;
   }
