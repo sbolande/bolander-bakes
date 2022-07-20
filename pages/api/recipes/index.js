@@ -9,9 +9,15 @@ export default async function handler(req, res) {
       // fetch query params
       const category = req.query.category;
       const favorites = req.query.favorites;
+      const name = req.query.name;
+      const ingredients = req.query.ingredients;
+      const instructions = req.query.instructions;
       let query = {};
       if (category) query.category = category;
       if (favorites) query.favorite = true;
+      if (name) query.name = { $regex: name };
+      if (ingredients) query.ingredients = { $regex: ingredients };
+      if (instructions) query.instructions = { $regex: instructions };
 
       // query collection
       const db = client.db(process.env.MONGO_DB);

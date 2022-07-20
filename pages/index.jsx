@@ -11,6 +11,7 @@ import NextLink from "next/link";
 import RecipeLoader from "../components/Recipe/RecipeLoader";
 
 import { TiPlus } from "react-icons/ti";
+import Search from "../components/Search/Search";
 
 export default function Home() {
   return (
@@ -34,11 +35,12 @@ export default function Home() {
           </HStack>
         </Link>
       </NextLink>
+      <Search />
       <Box>
         <Heading as="h2" align="center">
           Favorites
         </Heading>
-        <RecipeLoader favorites={true} />
+        <RecipeLoader favorites={true} freezeOnLoad />
       </Box>
     </VStack>
   );
