@@ -10,13 +10,11 @@ function isSet(val) {
 
 async function sendToMongo(recipe) {
   // conect to mongo
-  MongoClient.connect(process.env.MONGO_URL).then((client) => {
-    console.log("Successfully connected to Mongo.");
-
-    // insert into collection
-    const db = client.db(process.env.MONGO_DB);
-    db.collection("recipes").insertOne(recipe);
-  });
+  const client = await MongoClient.connect(process.env.MONGO_URL);
+  // insert into collection
+  const db = client.db(process.env.MONGO_DB);
+  const result = await db.collection("recipes").insertOne(recipe);
+  return result;
 }
 
 export default async function handler(req, res) {
