@@ -21,16 +21,11 @@ export default function Searchbar({ onSubmit }) {
           placeholder="Search recipes"
           focusBorderColor="teal.400"
         />
-        <InputRightElement
-          children={
-            <IconButton
-              children={<BiSearch />}
-              as="button"
-              type="submit"
-              color="teal.400"
-            />
-          }
-        />
+        <InputRightElement>
+          <IconButton as="button" type="submit" color="teal.400">
+            <BiSearch />
+          </IconButton>
+        </InputRightElement>
       </InputGroup>
     </chakra.form>
   );

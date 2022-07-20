@@ -25,7 +25,9 @@ export function FormInput({
         {label}
       </FormLabel>
       <InputGroup>
-        {icon && <InputLeftElement pointerEvents="none" children={icon} />}
+        {icon && (
+          <InputLeftElement pointerEvents="none">{icon}</InputLeftElement>
+        )}
         <Input
           name={name}
           type={type}

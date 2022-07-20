@@ -12,8 +12,6 @@ export default function RecipeLoader({
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if (freezeOnLoad && recipes.length > 0) return;
-
     // set querystring
     var query = [];
     if (category) query.push(`category=${category}`);
