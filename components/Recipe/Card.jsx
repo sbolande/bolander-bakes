@@ -81,18 +81,26 @@ export default function Card({
             {name}
           </Button>
         </Heading>
-        {hasImage && (
-          <Center>
-            <Button variant="unstyled" onClick={onOpen} h="fit-content">
+        <Center>
+          <Button variant="unstyled" onClick={onOpen} h="fit-content">
+            {hasImage && (
               <Img
                 src={imageUrl}
                 alt={name}
                 fallback="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLFhJEVjGAVBH-XiKoDa6Ft9NMyqgrY7m86Q&usqp=CAU"
                 borderRadius="md"
               />
-            </Button>
-          </Center>
-        )}
+            )}
+            {!hasImage && (
+              <Box
+                borderRadius="md"
+                w="240px"
+                h="150px"
+                backgroundColor="gray.300"
+              />
+            )}
+          </Button>
+        </Center>
         <Text fontSize="sm" alignSelf="start">
           {time}
         </Text>
@@ -128,10 +136,11 @@ export default function Card({
                   alt={name}
                   fallbackSrc="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLFhJEVjGAVBH-XiKoDa6Ft9NMyqgrY7m86Q&usqp=CAU"
                   fallbackStrategy="onError"
-                  boxSize="300px"
+                  maxH="300px"
+                  maxW={fullscreen && "420px"}
                   alignSelf="center"
                   borderRadius="md"
-                  fit="cover"
+                  objectFit="cover"
                 />
               )}
               <VStack align="left" w="100%" spacing="0.8rem">

@@ -20,7 +20,7 @@ export default function Home() {
         <Heading as="h1" color="teal.300" fontSize="2.3em">
           Bolander Bakes
         </Heading>
-        <Text>Whats cookin good lookin?</Text>
+        <Text>What&apos;s cookin&apos; good lookin&apos;?</Text>
       </Box>
       <NextLink href="/add" passHref>
         <Link
