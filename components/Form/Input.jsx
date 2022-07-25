@@ -8,6 +8,9 @@ import {
   Textarea,
   Select,
   Checkbox,
+  HStack,
+  PinInput,
+  PinInputField,
 } from "@chakra-ui/react";
 
 export function FormInput({
@@ -108,5 +111,18 @@ export function FormCheckbox({ name, label, icon, isChecked = false }) {
     >
       {label}
     </Checkbox>
+  );
+}
+
+export function FormPin({ name }) {
+  return (
+    <HStack>
+      <PinInput colorScheme="teal">
+        <PinInputField name={`${name}_1`} required />
+        <PinInputField name={`${name}_2`} required />
+        <PinInputField name={`${name}_3`} required />
+        <PinInputField name={`${name}_4`} required />
+      </PinInput>
+    </HStack>
   );
 }

@@ -1,5 +1,4 @@
 import { MongoClient } from "mongodb";
-import requestIp from "request-ip";
 
 function isSet(val) {
   if (val === null || val === undefined || val === "") {
@@ -23,10 +22,11 @@ export default async function handler(req, res) {
     return;
   }
 
-  const ip = requestIp.getClientIp(req);
-  console.log(ip);
-  if (ip !== process.env.TEST_IP && ip !== process.env.SETH_IP) {
-    res.status(401).send({ message: "Unauthorized, only Bolanders allowed!" });
+  const pin = req.body.pin;
+  console.log(pin);
+  if (pin !== process.env.PIN || !isSet(pin)) {
+    res.status(401).send({ message: "Incorrect PIN. Only Bolanders allowed." });
+    return;
   }
 
   try {

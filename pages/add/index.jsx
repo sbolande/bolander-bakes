@@ -3,6 +3,7 @@ import { chakra, Button, useToast, VStack } from "@chakra-ui/react";
 import {
   FormCheckbox,
   FormInput,
+  FormPin,
   FormSelect,
   FormTextarea,
 } from "../../components/Form/Input";
@@ -25,6 +26,11 @@ export default function Add() {
       const ingredients = event.target["ingredients"]?.value;
       const instructions = event.target["instructions"]?.value;
       const favorite = event.target["favorite"]?.checked;
+      const pin1 = event.target["pin_1"]?.value;
+      const pin2 = event.target["pin_2"]?.value;
+      const pin3 = event.target["pin_3"]?.value;
+      const pin4 = event.target["pin_4"]?.value;
+      const pin = `${pin1}${pin2}${pin3}${pin4}`;
 
       const res = await fetch("/api/create", {
         method: "POST",
@@ -36,6 +42,7 @@ export default function Add() {
           ingredients,
           instructions,
           favorite,
+          pin,
         }),
         headers: {
           "Content-type": "application/json",
@@ -71,7 +78,7 @@ export default function Add() {
       maxW="800px"
       onSubmit={handleSubmit}
     >
-      <VStack align="center" spacing="1rem" marginBottom="2rem">
+      <VStack align="center" spacing="0.6rem" marginBottom="0.6rem">
         <FormInput
           label="Recipe Name"
           name="name"
@@ -114,6 +121,7 @@ export default function Add() {
           placeholder="..."
         />
         <FormCheckbox label="Favorite?" name="favorite" icon={<FaStar />} />
+        <FormPin name="pin" />
         <Button
           type="submit"
           colorScheme="teal"
