@@ -26,6 +26,7 @@ export default function Add() {
       const ingredients = event.target["ingredients"]?.value;
       const instructions = event.target["instructions"]?.value;
       const favorite = event.target["favorite"]?.checked;
+      // build PIN from inputs
       const pin1 = event.target["pin_1"]?.value;
       const pin2 = event.target["pin_2"]?.value;
       const pin3 = event.target["pin_3"]?.value;

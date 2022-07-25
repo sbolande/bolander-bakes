@@ -23,7 +23,6 @@ export default async function handler(req, res) {
   }
 
   const pin = req.body.pin;
-  console.log(pin);
   if (pin !== process.env.PIN || !isSet(pin)) {
     res.status(401).send({ message: "Incorrect PIN. Only Bolanders allowed." });
     return;
