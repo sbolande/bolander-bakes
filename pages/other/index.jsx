@@ -1,5 +1,10 @@
+import { Center } from "@chakra-ui/react";
 import RecipeLoader from "../../components/Recipe/RecipeLoader";
 
 export default function Other() {
-  return <RecipeLoader category="Other" freezeOnLoad />;
+  return (
+    <Center>
+      <RecipeLoader category="Other" />
+    </Center>
+  );
 }

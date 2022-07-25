@@ -2,7 +2,12 @@ import {
   chakra,
   Box,
   Button,
+  Center,
   Heading,
+  HStack,
+  Icon,
+  IconButton,
+  Img,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -10,19 +15,14 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  Text,
-  useDisclosure,
-  VStack,
   Tag,
   TagLabel,
   TagRightIcon,
-  HStack,
-  Icon,
-  IconButton,
-  Image,
-  Center,
-  useBoolean,
+  Text,
   Stack,
+  VStack,
+  useDisclosure,
+  useBoolean,
 } from "@chakra-ui/react";
 
 import { MdStar, MdCloseFullscreen, MdOpenInFull } from "react-icons/md";
@@ -84,7 +84,7 @@ export default function Card({
         {hasImage && (
           <Center>
             <Button variant="unstyled" onClick={onOpen} h="fit-content">
-              <Image
+              <Img
                 src={imageUrl}
                 alt={name}
                 fallback="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLFhJEVjGAVBH-XiKoDa6Ft9NMyqgrY7m86Q&usqp=CAU"
@@ -123,7 +123,7 @@ export default function Card({
               }}
             >
               {hasImage && (
-                <Image
+                <Img
                   src={imageUrl}
                   alt={name}
                   fallbackSrc="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLFhJEVjGAVBH-XiKoDa6Ft9NMyqgrY7m86Q&usqp=CAU"

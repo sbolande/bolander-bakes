@@ -6,7 +6,6 @@ export default function RecipeLoader({
   category = null,
   favorites = false,
   searchTerm = null,
-  freezeOnLoad = false,
 }) {
   const [recipes, setRecipes] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
