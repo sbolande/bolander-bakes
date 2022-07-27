@@ -33,6 +33,7 @@ import {
   MdOpenInFull,
   MdEdit,
 } from "react-icons/md";
+import { BiTrash } from "react-icons/bi";
 
 export default function Card({
   recipe: {
@@ -184,17 +185,23 @@ export default function Card({
             </Stack>
           </ModalBody>
           <ModalFooter>
-            <IconButton
-              colorScheme="teal"
-              mr="3"
-              icon={fullscreen ? <MdCloseFullscreen /> : <MdOpenInFull />}
-              onClick={setFullscreen.toggle}
-            />
-            <NextLink href={`/edit/${_id}`} passHref>
-              <Link>
-                <IconButton colorScheme="teal" icon={<MdEdit />} />
-              </Link>
-            </NextLink>
+            <HStack spacing="1rem">
+              <IconButton
+                colorScheme="teal"
+                icon={fullscreen ? <MdCloseFullscreen /> : <MdOpenInFull />}
+                onClick={setFullscreen.toggle}
+              />
+              <NextLink href={`/edit/${_id}`} passHref>
+                <Link>
+                  <IconButton colorScheme="teal" icon={<MdEdit />} />
+                </Link>
+              </NextLink>
+              <NextLink href={`/delete/${_id}`} passHref>
+                <Link>
+                  <IconButton colorScheme="red" icon={<BiTrash />} />
+                </Link>
+              </NextLink>
+            </HStack>
           </ModalFooter>
         </ModalContent>
       </Modal>
