@@ -36,13 +36,15 @@ export default function Add() {
       const res = await fetch("/api/create", {
         method: "POST",
         body: JSON.stringify({
-          name,
-          category,
-          imageUrl,
-          time,
-          ingredients,
-          instructions,
-          favorite,
+          recipe: {
+            name,
+            category,
+            imageUrl,
+            time,
+            ingredients,
+            instructions,
+            favorite,
+          },
           pin,
         }),
         headers: {

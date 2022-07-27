@@ -29,8 +29,8 @@ export default async function handler(req, res) {
   }
 
   try {
-    console.log(req.body);
-    const { name, category, favorite } = req.body;
+    console.log(req.body.recipe);
+    const { name, category, favorite } = req.body.recipe;
 
     /** VALIDATION **/
     if (!isSet(name) || !isSet(category)) {
@@ -45,7 +45,7 @@ export default async function handler(req, res) {
       return;
     }
 
-    await sendToMongo(req.body);
+    await sendToMongo(req.body.recipe);
     res.status(201).send({
       message: `${name} added to ${category}${
         favorite ? " and Favorites" : ""
