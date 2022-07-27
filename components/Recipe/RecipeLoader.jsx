@@ -20,7 +20,7 @@ export default function RecipeLoader({
 
     // fetch recipes
     setIsLoading(true);
-    fetch(`api/recipes${queryString}`)
+    fetch(`/api/recipes${queryString}`)
       .then((res) => {
         if (res.ok) return res.json();
         else throw `${res.status} error`;

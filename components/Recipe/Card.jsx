@@ -23,13 +23,21 @@ import {
   VStack,
   useDisclosure,
   useBoolean,
+  Link,
 } from "@chakra-ui/react";
+import NextLink from "next/link";
 
-import { MdStar, MdCloseFullscreen, MdOpenInFull } from "react-icons/md";
+import {
+  MdStar,
+  MdCloseFullscreen,
+  MdOpenInFull,
+  MdEdit,
+} from "react-icons/md";
+import { BiTrash } from "react-icons/bi";
 
 export default function Card({
   recipe: {
-    id,
+    _id,
     name,
     imageUrl,
     category,
@@ -59,7 +67,7 @@ export default function Card({
   return (
     <>
       <VStack
-        id={`recipe_${id}`}
+        id={_id}
         w={{ base: "75vw", sm: "40vw", md: "25vw", lg: "20vw" }}
         justify="space-between"
         border="1px"
@@ -67,19 +75,17 @@ export default function Card({
         borderRadius="lg"
         padding="0.5rem"
       >
-        <Heading as="h3" fontSize="lg" textAlign="center">
-          <Button
-            variant="unstyled"
-            color="teal.200"
-            _hover={{ color: "teal.400" }}
-            _focus={{ textDecor: "underline" }}
-            onClick={onOpen}
-            rightIcon={
-              favorite ? <Icon as={MdStar} color="yellow.100" /> : <path />
-            }
-          >
-            {name}
-          </Button>
+        <Heading
+          as="h3"
+          fontSize="lg"
+          textAlign="center"
+          color="teal.200"
+          _hover={{ color: "teal.400" }}
+          _focus={{ textDecor: "underline" }}
+          cursor="pointer"
+          onClick={onOpen}
+        >
+          {name} {favorite && <Icon as={MdStar} color="yellow.100" />}
         </Heading>
         <Center>
           <Button variant="unstyled" onClick={onOpen} h="fit-content">
@@ -179,15 +185,23 @@ export default function Card({
             </Stack>
           </ModalBody>
           <ModalFooter>
-            <IconButton
-              colorScheme="teal"
-              mr="3"
-              icon={fullscreen ? <MdCloseFullscreen /> : <MdOpenInFull />}
-              onClick={setFullscreen.toggle}
-            />
-            <Button colorScheme="teal" mr="3" onClick={onClose}>
-              Close
-            </Button>
+            <HStack spacing="1rem">
+              <IconButton
+                colorScheme="teal"
+                icon={fullscreen ? <MdCloseFullscreen /> : <MdOpenInFull />}
+                onClick={setFullscreen.toggle}
+              />
+              <NextLink href={`/edit/${_id}`} passHref>
+                <Link>
+                  <IconButton colorScheme="teal" icon={<MdEdit />} />
+                </Link>
+              </NextLink>
+              <NextLink href={`/delete/${_id}`} passHref>
+                <Link>
+                  <IconButton colorScheme="red" icon={<BiTrash />} />
+                </Link>
+              </NextLink>
+            </HStack>
           </ModalFooter>
         </ModalContent>
       </Modal>

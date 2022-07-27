@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useRouter } from "next/router";
 import { chakra, Button, useToast, VStack } from "@chakra-ui/react";
 import {
   FormCheckbox,
@@ -11,6 +12,7 @@ import {
 import { FaStar } from "react-icons/fa";
 
 export default function Add() {
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const toast = useToast();
 
@@ -18,24 +20,24 @@ export default function Add() {
     event.preventDefault();
     setIsLoading(true);
 
-    try {
-      const name = event.target["name"]?.value;
-      const category = event.target["category"]?.value;
-      const imageUrl = event.target["imageUrl"]?.value;
-      const time = event.target["time"]?.value;
-      const ingredients = event.target["ingredients"]?.value;
-      const instructions = event.target["instructions"]?.value;
-      const favorite = event.target["favorite"]?.checked;
-      // build PIN from inputs
-      const pin1 = event.target["pin_1"]?.value;
-      const pin2 = event.target["pin_2"]?.value;
-      const pin3 = event.target["pin_3"]?.value;
-      const pin4 = event.target["pin_4"]?.value;
-      const pin = `${pin1}${pin2}${pin3}${pin4}`;
+    const name = event.target["name"]?.value;
+    const category = event.target["category"]?.value;
+    const imageUrl = event.target["imageUrl"]?.value;
+    const time = event.target["time"]?.value;
+    const ingredients = event.target["ingredients"]?.value;
+    const instructions = event.target["instructions"]?.value;
+    const favorite = event.target["favorite"]?.checked;
+    // build PIN from inputs
+    const pin1 = event.target["pin_1"]?.value;
+    const pin2 = event.target["pin_2"]?.value;
+    const pin3 = event.target["pin_3"]?.value;
+    const pin4 = event.target["pin_4"]?.value;
+    const pin = `${pin1}${pin2}${pin3}${pin4}`;
 
-      const res = await fetch("/api/create", {
-        method: "POST",
-        body: JSON.stringify({
+    fetch("/api/create", {
+      method: "POST",
+      body: JSON.stringify({
+        recipe: {
           name,
           category,
           imageUrl,
@@ -43,32 +45,38 @@ export default function Add() {
           ingredients,
           instructions,
           favorite,
-          pin,
-        }),
-        headers: {
-          "Content-type": "application/json",
         },
-      });
-      const data = await res.json();
-
-      if (!res.ok) throw new Error(`${res.status}: ${data.message}`);
-
-      toast({
-        title: data.message,
-        status: "success",
-        isClosable: true,
-      });
-    } catch (err) {
-      console.log(err);
-      toast({
-        title: "There was a problem adding that recipe!",
-        description: err.message,
-        status: "error",
-        isClosable: true,
-      });
-    } finally {
-      setIsLoading(false);
-    }
+        pin,
+      }),
+      headers: {
+        "Content-type": "application/json",
+      },
+    })
+      .then(async (res) => {
+        let data = await res.json();
+        if (!res.ok) throw new Error(`${res.status}: ${data.message}`);
+        return data;
+      })
+      .then((data) => {
+        toast({
+          title: data.message,
+          status: "success",
+          isClosable: true,
+        });
+        setTimeout(() => {
+          router.push("/");
+        }, 1500);
+      })
+      .catch((err) => {
+        console.log(err);
+        toast({
+          title: "There was a problem adding that recipe!",
+          description: err.message,
+          status: "error",
+          isClosable: true,
+        });
+      })
+      .finally(() => setIsLoading(false));
   };
 
   return (

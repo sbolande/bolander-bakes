@@ -21,6 +21,7 @@ export function FormInput({
   required,
   autoFocus,
   icon,
+  value,
 }) {
   return (
     <FormControl isRequired={required}>
@@ -38,6 +39,7 @@ export function FormInput({
           focusBorderColor="teal.400"
           required={required}
           autoFocus={autoFocus}
+          defaultValue={value}
         />
       </InputGroup>
     </FormControl>
@@ -50,6 +52,7 @@ export function FormTextarea({
   placeholder,
   required,
   autoFocus,
+  value,
 }) {
   return (
     <FormControl isRequired={required}>
@@ -63,6 +66,7 @@ export function FormTextarea({
         required={required}
         autoFocus={autoFocus}
         minH="8em"
+        defaultValue={value}
       />
     </FormControl>
   );
@@ -75,6 +79,7 @@ export function FormSelect({
   required,
   autoFocus,
   children,
+  value,
 }) {
   const [firstRender, setFirstRender] = useState(true);
   const handleChange = () => {
@@ -93,6 +98,7 @@ export function FormSelect({
         autoFocus={autoFocus}
         required={required}
         focusBorderColor="teal.400"
+        defaultValue={value}
       >
         {children}
       </Select>
@@ -100,14 +106,24 @@ export function FormSelect({
   );
 }
 
-export function FormCheckbox({ name, label, icon, isChecked = false }) {
+export function FormCheckbox({
+  name,
+  label,
+  icon,
+  isChecked = false,
+  onChange = null,
+}) {
   const [showIcon, setShowIcon] = useState(isChecked);
   return (
     <Checkbox
       name={name}
       colorScheme="teal"
       icon={showIcon ? icon : <path />}
-      onChange={(e) => setShowIcon(e.target.checked)}
+      onChange={(e) => {
+        setShowIcon(e.target.checked);
+        onChange(e.target.checked);
+      }}
+      isChecked={showIcon}
     >
       {label}
     </Checkbox>
