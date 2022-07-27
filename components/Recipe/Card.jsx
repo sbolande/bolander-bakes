@@ -74,19 +74,17 @@ export default function Card({
         borderRadius="lg"
         padding="0.5rem"
       >
-        <Heading as="h3" fontSize="lg" textAlign="center">
-          <Button
-            variant="unstyled"
-            color="teal.200"
-            _hover={{ color: "teal.400" }}
-            _focus={{ textDecor: "underline" }}
-            onClick={onOpen}
-            rightIcon={
-              favorite ? <Icon as={MdStar} color="yellow.100" /> : <path />
-            }
-          >
-            {name}
-          </Button>
+        <Heading
+          as="h3"
+          fontSize="lg"
+          textAlign="center"
+          color="teal.200"
+          _hover={{ color: "teal.400" }}
+          _focus={{ textDecor: "underline" }}
+          cursor="pointer"
+          onClick={onOpen}
+        >
+          {name} {favorite && <Icon as={MdStar} color="yellow.100" />}
         </Heading>
         <Center>
           <Button variant="unstyled" onClick={onOpen} h="fit-content">
