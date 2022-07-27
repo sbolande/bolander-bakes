@@ -23,13 +23,20 @@ import {
   VStack,
   useDisclosure,
   useBoolean,
+  Link,
 } from "@chakra-ui/react";
+import NextLink from "next/link";
 
-import { MdStar, MdCloseFullscreen, MdOpenInFull } from "react-icons/md";
+import {
+  MdStar,
+  MdCloseFullscreen,
+  MdOpenInFull,
+  MdEdit,
+} from "react-icons/md";
 
 export default function Card({
   recipe: {
-    id,
+    _id,
     name,
     imageUrl,
     category,
@@ -59,7 +66,7 @@ export default function Card({
   return (
     <>
       <VStack
-        id={`recipe_${id}`}
+        id={_id}
         w={{ base: "75vw", sm: "40vw", md: "25vw", lg: "20vw" }}
         justify="space-between"
         border="1px"
@@ -185,9 +192,11 @@ export default function Card({
               icon={fullscreen ? <MdCloseFullscreen /> : <MdOpenInFull />}
               onClick={setFullscreen.toggle}
             />
-            <Button colorScheme="teal" mr="3" onClick={onClose}>
-              Close
-            </Button>
+            <NextLink href={`/edit/${_id}`} passHref>
+              <Link>
+                <IconButton colorScheme="teal" icon={<MdEdit />} />
+              </Link>
+            </NextLink>
           </ModalFooter>
         </ModalContent>
       </Modal>

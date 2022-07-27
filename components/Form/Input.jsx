@@ -39,7 +39,7 @@ export function FormInput({
           focusBorderColor="teal.400"
           required={required}
           autoFocus={autoFocus}
-          value={value}
+          defaultValue={value}
         />
       </InputGroup>
     </FormControl>
@@ -66,7 +66,7 @@ export function FormTextarea({
         required={required}
         autoFocus={autoFocus}
         minH="8em"
-        value={value}
+        defaultValue={value}
       />
     </FormControl>
   );
@@ -98,7 +98,7 @@ export function FormSelect({
         autoFocus={autoFocus}
         required={required}
         focusBorderColor="teal.400"
-        value={value}
+        defaultValue={value}
       >
         {children}
       </Select>
