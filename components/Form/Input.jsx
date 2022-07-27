@@ -106,14 +106,23 @@ export function FormSelect({
   );
 }
 
-export function FormCheckbox({ name, label, icon, isChecked = false }) {
+export function FormCheckbox({
+  name,
+  label,
+  icon,
+  isChecked = false,
+  onChange = null,
+}) {
   const [showIcon, setShowIcon] = useState(isChecked);
   return (
     <Checkbox
       name={name}
       colorScheme="teal"
       icon={showIcon ? icon : <path />}
-      onChange={(e) => setShowIcon(e.target.checked)}
+      onChange={(e) => {
+        setShowIcon(e.target.checked);
+        onChange(e.target.checked);
+      }}
       isChecked={showIcon}
     >
       {label}
