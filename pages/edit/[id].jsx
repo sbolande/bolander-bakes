@@ -66,7 +66,7 @@ export default function Edit() {
       const pin4 = event.target["pin_4"]?.value;
       const pin = `${pin1}${pin2}${pin3}${pin4}`;
 
-      const res = await fetch("/api/edit", {
+      const res = await fetch(`/api/edit/${id}`, {
         method: "PUT",
         body: JSON.stringify({
           recipe: {
@@ -102,7 +102,7 @@ export default function Edit() {
         isClosable: true,
       });
     } finally {
-      setIsLoading(false);
+      setIsPutting(false);
     }
   };
 

@@ -114,6 +114,7 @@ export function FormCheckbox({ name, label, icon, isChecked = false }) {
       colorScheme="teal"
       icon={showIcon ? icon : <path />}
       onChange={(e) => setShowIcon(e.target.checked)}
+      isChecked={showIcon}
     >
       {label}
     </Checkbox>
