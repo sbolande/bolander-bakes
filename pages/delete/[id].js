@@ -46,8 +46,8 @@ export default function Delete() {
     event.preventDefault();
     setIsDeleting(true);
 
-    const authorize = event.target["authorize"]?.checked;
-    if (authorize) {
+    const authorized = event.target["authorize"]?.checked;
+    if (authorized) {
       // build PIN from inputs
       const pin1 = event.target["pin_1"]?.value;
       const pin2 = event.target["pin_2"]?.value;
@@ -58,7 +58,7 @@ export default function Delete() {
       fetch(`/api/delete/${id}`, {
         method: "DELETE",
         body: JSON.stringify({
-          authorize,
+          authorized,
           pin,
         }),
         headers: {

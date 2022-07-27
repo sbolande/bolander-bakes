@@ -28,6 +28,12 @@ export default async function handler(req, res) {
     return;
   }
 
+  const authorized = req.body.authorized;
+  if (authorized !== true || !isSet(authorized)) {
+    res.status(412).send({ message: "Checkbox must be checked!" });
+    return;
+  }
+
   try {
     await sendToMongo(req.query.id);
     res.status(202).send({ message: `Recipe deleted successfully` });
