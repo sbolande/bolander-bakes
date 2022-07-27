@@ -19,7 +19,7 @@ async function sendToMongo(id, recipe) {
 }
 
 export default async function handler(req, res) {
-  console.log(req.query.id);
+  // console.log(req.query.id);
   if (req.method !== "PUT") {
     res.status(405).send({ message: "Only PUT requests allowed." });
     return;
