@@ -64,6 +64,11 @@ export default function Card({
     }
   };
 
+  const addDefaultSrc = (ev) => {
+    ev.target.src =
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLFhJEVjGAVBH-XiKoDa6Ft9NMyqgrY7m86Q&usqp=CAU";
+  };
+
   return (
     <>
       <VStack
@@ -89,22 +94,12 @@ export default function Card({
         </Heading>
         <Center>
           <Button variant="unstyled" onClick={onOpen} h="fit-content">
-            {hasImage && (
-              <Img
-                src={imageUrl}
-                alt={name}
-                fallback="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLFhJEVjGAVBH-XiKoDa6Ft9NMyqgrY7m86Q&usqp=CAU"
-                borderRadius="md"
-              />
-            )}
-            {!hasImage && (
-              <Box
-                borderRadius="md"
-                w="240px"
-                h="150px"
-                backgroundColor="gray.300"
-              />
-            )}
+            <Img
+              src={imageUrl}
+              alt={name}
+              onError={addDefaultSrc}
+              borderRadius="md"
+            />
           </Button>
         </Center>
         <Text fontSize="sm" alignSelf="start">
