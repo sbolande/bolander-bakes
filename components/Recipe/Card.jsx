@@ -26,6 +26,7 @@ import {
   Link,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
+import { CategoryTag, FavoriteTag } from "./RecipeTag";
 
 import {
   MdStar,
@@ -50,19 +51,6 @@ export default function Card({
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [fullscreen, setFullscreen] = useBoolean(false);
   const hasImage = imageUrl !== null && imageUrl !== "";
-
-  const getCategoryScheme = () => {
-    switch (category.toLowerCase()) {
-      case "breakfast":
-        return "yellow";
-      case "lunch":
-        return "green";
-      case "dinner":
-        return "pink";
-      default:
-        return "teal";
-    }
-  };
 
   const hideImg = (ev) => {
     ev.target.style.display = "none";
@@ -162,19 +150,8 @@ export default function Card({
                   <Text whiteSpace="pre-wrap">{instructions}</Text>
                 </Box>
                 <HStack align="start" spacing="0.5rem">
-                  <Tag
-                    size="lg"
-                    variant="subtle"
-                    colorScheme={getCategoryScheme()}
-                  >
-                    <TagLabel>{category}</TagLabel>
-                  </Tag>
-                  {favorite && (
-                    <Tag size="lg" variant="subtle" colorScheme="teal">
-                      <TagLabel>Favorite</TagLabel>
-                      <TagRightIcon as={MdStar} />
-                    </Tag>
-                  )}
+                  <CategoryTag category={category} />
+                  {favorite && <FavoriteTag />}
                 </HStack>
               </VStack>
             </Stack>
