@@ -64,9 +64,8 @@ export default function Card({
     }
   };
 
-  const addDefaultSrc = (ev) => {
-    ev.target.src =
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLFhJEVjGAVBH-XiKoDa6Ft9NMyqgrY7m86Q&usqp=CAU";
+  const hideImg = (ev) => {
+    ev.target.style.display = "none";
   };
 
   return (
@@ -94,12 +93,14 @@ export default function Card({
         </Heading>
         <Center>
           <Button variant="unstyled" onClick={onOpen} h="fit-content">
-            <Img
-              src={imageUrl}
-              alt={name}
-              onError={addDefaultSrc}
-              borderRadius="md"
-            />
+            {hasImage && (
+              <Img
+                src={imageUrl}
+                alt={name}
+                onError={hideImg}
+                borderRadius="md"
+              />
+            )}
           </Button>
         </Center>
         <Text fontSize="sm" alignSelf="start">
@@ -135,7 +136,6 @@ export default function Card({
                 <Img
                   src={imageUrl}
                   alt={name}
-                  fallbackSrc="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLFhJEVjGAVBH-XiKoDa6Ft9NMyqgrY7m86Q&usqp=CAU"
                   fallbackStrategy="onError"
                   maxH="300px"
                   maxW={fullscreen && "420px"}
