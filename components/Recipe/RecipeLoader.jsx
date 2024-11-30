@@ -25,7 +25,14 @@ export default function RecipeLoader({
         if (res.ok) return res.json();
         else throw `${res.status} error`;
       })
-      .then((data) => setRecipes(data))
+      .then((data) => {
+        data.sort((a, b) => {
+          let textA = a.name?.toUpperCase();
+          let textB = b.name?.toUpperCase();
+          return textA < textB ? -1 : textA > textB ? 1 : 0;
+        });
+        setRecipes(data);
+      })
       .catch((err) => console.error(err))
       .finally(() => setIsLoading(false));
   }, [category, favorites, searchTerm]);
