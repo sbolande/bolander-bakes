@@ -38,3 +38,4 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 - Upgrade React and Next
 - Sort by alphabetical instead of by most recent, favorites on top
 - Make Modal title disappear on fullscreen or move with scroll
+- Cache responses
