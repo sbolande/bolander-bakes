@@ -8,6 +8,7 @@ export default function Recipes({ recipes }) {
       spacing="1rem"
       w="100%"
       padding="1rem"
+      alignItems="center"
     >
       {recipes.length === 0 && <Text>No recipes found.</Text>}
       {recipes.length > 0 &&
