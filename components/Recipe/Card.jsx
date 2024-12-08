@@ -81,6 +81,8 @@ export default function Card({
         borderColor="gray.500"
         borderRadius="lg"
         padding="0.5rem"
+        maxHeight="fit-content"
+        minHeight="5em"
       >
         <Heading
           as="h3"
