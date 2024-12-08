@@ -49,7 +49,8 @@ export default function Card({
 }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [fullscreen, setFullscreen] = useBoolean(false);
-  const hasImage = imageUrl !== null && imageUrl !== "";
+  let hasImage = !!imageUrl && imageUrl.trim().length !== 0;
+  const hasTime = !!time && time.trim().length !== 0;
 
   const getCategoryScheme = () => {
     switch (category.toLowerCase()) {
@@ -67,6 +68,7 @@ export default function Card({
   const addDefaultSrc = (ev) => {
     ev.target.src =
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLFhJEVjGAVBH-XiKoDa6Ft9NMyqgrY7m86Q&usqp=CAU";
+    hasImage = false;
   };
 
   return (
@@ -74,7 +76,7 @@ export default function Card({
       <VStack
         id={_id}
         w={{ base: "75vw", sm: "40vw", md: "25vw", lg: "20vw" }}
-        justify="space-between"
+        justify="space-evenly"
         border="1px"
         borderColor="gray.500"
         borderRadius="lg"
@@ -92,7 +94,7 @@ export default function Card({
         >
           {name} {favorite && <Icon as={MdStar} color="yellow.100" />}
         </Heading>
-        <Center>
+        {hasImage && (<Center>
           <Button variant="unstyled" onClick={onOpen} h="fit-content">
             <Img
               src={imageUrl}
@@ -101,10 +103,10 @@ export default function Card({
               borderRadius="md"
             />
           </Button>
-        </Center>
-        <Text fontSize="sm" alignSelf="start">
+        </Center>)}
+        {hasTime && (<Text fontSize="sm" alignSelf="start">
           {time}
-        </Text>
+        </Text>)}
       </VStack>
       <Modal
         isOpen={isOpen}
@@ -135,8 +137,7 @@ export default function Card({
                 <Img
                   src={imageUrl}
                   alt={name}
-                  fallbackSrc="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLFhJEVjGAVBH-XiKoDa6Ft9NMyqgrY7m86Q&usqp=CAU"
-                  fallbackStrategy="onError"
+                  onError={addDefaultSrc}
                   maxH="300px"
                   maxW={fullscreen && "420px"}
                   alignSelf="center"
