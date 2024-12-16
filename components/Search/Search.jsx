@@ -5,22 +5,22 @@ import Searchbar from "./Searchbar";
 import RecipeLoader from "../Recipe/RecipeLoader";
 
 export default function Search() {
-  const [searchTerm, setSearchTerm] = useState();
+  const [searchTerms, setSearchTerms] = useState();
 
   const handleSearch = (val) => {
     console.log(val);
-    setSearchTerm(val);
+    setSearchTerms(val);
   };
 
   return (
     <VStack w="100%">
       <Searchbar onSubmit={handleSearch} />
-      {searchTerm && (
+      {searchTerms && (
         <>
           <Heading as="h2" align="center">
             Search Results
           </Heading>
-          <RecipeLoader searchTerm={searchTerm} />
+          <RecipeLoader searchTerms={searchTerms} />
         </>
       )}
     </VStack>
