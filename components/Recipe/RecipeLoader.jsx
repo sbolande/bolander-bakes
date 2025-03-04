@@ -1,20 +1,7 @@
 import { useState, useEffect } from "react";
 import { Center, Spinner } from "@chakra-ui/react";
+import { sortRecipes } from "../../utils/loaderUtil";
 import Recipes from "./Recipes";
-
-function sortRecipes(recipes) {
-  recipes.sort((a, b) => {
-    // favorites first
-    if (a.favorite != b.favorite) {
-      return a.favorite < b.favorite ? 1 : -1;
-    }
-
-    let textA = a.name?.toUpperCase();
-    let textB = b.name?.toUpperCase();
-    return textA < textB ? -1 : 1;
-  });
-  return recipes;
-}
 
 export default function RecipeLoader({
   category = null,

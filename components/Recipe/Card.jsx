@@ -53,6 +53,8 @@ export default function Card({
   const hasTime = !!time && time.trim().length !== 0;
 
   const getCategoryScheme = () => {
+    if (!category) return;
+    
     switch (category.toLowerCase()) {
       case "breakfast":
         return "yellow";

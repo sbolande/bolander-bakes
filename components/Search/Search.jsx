@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import { VStack, Heading } from "@chakra-ui/react";
 import Searchbar from "./Searchbar";
-import RecipeLoader from "../Recipe/RecipeLoader";
+import SearchResultLoader from "./SearchResultLoader";
 
 export default function Search() {
   const [searchTerms, setSearchTerms] = useState();
@@ -20,7 +20,7 @@ export default function Search() {
           <Heading as="h2" align="center">
             Search Results
           </Heading>
-          <RecipeLoader searchTerms={searchTerms} />
+          <SearchResultLoader searchTerms={searchTerms} />
         </>
       )}
     </VStack>
