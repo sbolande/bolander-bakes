@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Center, Spinner } from "@chakra-ui/react";
+import { Center, Spinner, ButtonGroup, Button } from "@chakra-ui/react";
 import { sortRecipes } from "../../utils/loaderUtil";
 import Recipes from "../Recipe/Recipes";
 
@@ -45,14 +45,20 @@ export default function SearchResultLoader({ searchTerms }) {
     let results = [];
 
     results = results.concat(sortRecipes(matches.exactMatch));
-    if (showMore >= 1) {
+    if (showMore >= 1 && matches.closeMatch.length > 0) {
       results = results.concat(sortRecipes(matches.closeMatch));
+    } else if (showMore === 1 && matches.closeMatch.length === 0) {
+      incrementShowMore();
     }
-    if (showMore >= 2) {
+    if (showMore >= 2 && matches.wordMatch.length > 0) {
       results = results.concat(sortRecipes(matches.wordMatch));
+    } else if (showMore === 2 && matches.wordMatch.length === 0) {
+      incrementShowMore();
     }
-    if (showMore >= 3) {
+    if (showMore >= 3 && matches.ingredientMatch.length > 0) {
       results = results.concat(sortRecipes(matches.ingredientMatch));
+    } else if (showMore === 3 && matches.ingredientMatch.length === 0) {
+      incrementShowMore();
     }
 
     setRecipes(results);
@@ -67,24 +73,16 @@ export default function SearchResultLoader({ searchTerms }) {
       setShowMore(showMore + 1);
     }
   };
-  const decrementShowMore = () => {
-    if (showMore > showMoreMax) setShowMore(showMoreMax);
-    if (showMore <= showMoreMin) {
-      setShowMore(showMoreMin);
-    } else {
-      setShowMore(showMore - 1);
-      setHideShowMore(false);
-    }
-  };
 
   return (
-    <Center>
-      {isLoading && <Spinner marginTop="1rem" />}
-      {!isLoading && <Recipes recipes={recipes} />}
+    <>
+      <Center>
+        {isLoading && <Spinner marginTop="1rem" />}
+        {!isLoading && <Recipes recipes={recipes} />}
+      </Center>
       {!isLoading && <div>
-        {!hideShowMore && <p onClick={incrementShowMore}>Show more...</p>}
-        {(!hideShowMore && showMore > 0) && <p onClick={decrementShowMore}>Show less...</p>}
+        {!hideShowMore && <Button onClick={incrementShowMore}>Show more...</Button>}
       </div>}
-    </Center>
+    </>
   );
 }
