@@ -1,4 +1,5 @@
 import { MongoClient } from "mongodb";
+import { filterSearchResults } from "../../../utils/searchUtil";
 
 export default async function handler(req, res) {
   // fetch query params
@@ -7,6 +8,8 @@ export default async function handler(req, res) {
   const name = req.query.name;
   const ingredients = req.query.ingredients;
   const instructions = req.query.instructions;
+  const searchTerms = req.query.q;
+
   let query = {};
   if (category) query.category = category;
   if (favorites) query.favorite = true;
@@ -25,7 +28,12 @@ export default async function handler(req, res) {
 
     if (recipes === null || recipes.length === 0) {
       console.log("No documents found in db.");
+    } else if (searchTerms) {
+      const filteredRecipes = filterSearchResults(recipes, searchTerms);
+      res.status(200).json(filteredRecipes);
+      return;
     }
+
     res.status(200).json(recipes);
     return;
   } catch (err) {
